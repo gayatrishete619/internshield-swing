@@ -49,8 +49,8 @@ public class DashboardPage extends JFrame {
         instruction.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
-        JTextArea messageArea = new JTextArea(3, 25); // smaller size
-        messageArea.setMaximumSize(new Dimension(300, 80)); // control width & height
+        JTextArea messageArea = new JTextArea(3, 25); 
+        messageArea.setMaximumSize(new Dimension(300, 80)); 
         messageArea.setLineWrap(true);
         messageArea.setWrapStyleWord(true);
         messageArea.setBackground(new Color(50, 50, 50));
@@ -59,8 +59,8 @@ public class DashboardPage extends JFrame {
         messageArea.setBorder(new EmptyBorder(10,10,10,10));
 
         JScrollPane scrollPane = new JScrollPane(messageArea);
-        scrollPane.setBorder(null);              // removes outer border
-        scrollPane.setViewportBorder(null);     // removes inner border
+        scrollPane.setBorder(null);              
+        scrollPane.setViewportBorder(null);     
 
        // scrollPane.setBorder(new LineBorder(new Color(80, 80, 80)));
         messageArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
