@@ -20,69 +20,81 @@ public class DashboardPage extends JFrame {
         mainPanel.setBackground(bgColor);
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // ================= HEADER =================
-        JLabel title = new JLabel("Fake Internship Message Detector");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        title.setForeground(Color.WHITE);
-
-        JLabel welcome = new JLabel("Welcome, " + username);
-        welcome.setForeground(textColor);
-
+        // ================= TOP BAR =================
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(bgColor);
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        topPanel.add(title, BorderLayout.CENTER);
-       // topPanel.add(welcome, BorderLayout.EAST);
 
-        // ================= CENTER CARD =================
+        JLabel logo = new JLabel("🛡 InternShield");
+        logo.setFont(new Font("Segoe UI", Font.BOLD, 22)); // bigger
+        logo.setForeground(Color.WHITE);
+
+        JButton logoutBtn = new JButton("Logout");
+        logoutBtn.setBackground(orange);
+        logoutBtn.setForeground(Color.WHITE);
+        logoutBtn.setFocusPainted(false);
+        logoutBtn.setPreferredSize(new Dimension(120, 35));
+
+        logoutBtn.addActionListener(e -> {
+            new ModernLoginPage().setVisible(true);
+            dispose();
+        });
+
+        topPanel.add(logo, BorderLayout.WEST);
+        topPanel.add(logoutBtn, BorderLayout.EAST);
+
+        // ================= CARD =================
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(cardColor);
         card.setBorder(new CompoundBorder(
                 new LineBorder(new Color(60, 60, 60), 1, true),
-                new EmptyBorder(20, 20, 20, 20)
+                new EmptyBorder(30, 30, 30, 30)
         ));
 
         JLabel instruction = new JLabel("Paste Internship Message Below:");
-        instruction.setFont(new Font("Segoe UI", Font.BOLD, 16)); // BOLD here
+        instruction.setFont(new Font("Segoe UI", Font.BOLD, 18));
         instruction.setForeground(textColor);
         instruction.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
-        JTextArea messageArea = new JTextArea(3, 25); 
-        messageArea.setMaximumSize(new Dimension(300, 80)); 
+        // ===== BIGGER TEXT AREA =====
+        JTextArea messageArea = new JTextArea(8, 40);
         messageArea.setLineWrap(true);
         messageArea.setWrapStyleWord(true);
         messageArea.setBackground(new Color(50, 50, 50));
         messageArea.setForeground(Color.WHITE);
         messageArea.setCaretColor(Color.WHITE);
-        messageArea.setBorder(new EmptyBorder(10,10,10,10));
+        messageArea.setBorder(new EmptyBorder(15,15,15,15));
 
         JScrollPane scrollPane = new JScrollPane(messageArea);
-        scrollPane.setBorder(null);              
-        scrollPane.setViewportBorder(null);     
+        scrollPane.setBorder(null);
 
-       // scrollPane.setBorder(new LineBorder(new Color(80, 80, 80)));
-        messageArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        scrollPane.setMaximumSize(new Dimension(400, 450));
-        scrollPane.setPreferredSize(new Dimension(400, 450));
+        // CENTERING the box properly
+        JPanel textWrapper = new JPanel();
+        textWrapper.setBackground(cardColor);
+        textWrapper.setLayout(new FlowLayout(FlowLayout.CENTER));
+        scrollPane.setPreferredSize(new Dimension(650, 220)); // bigger + centered
+        textWrapper.add(scrollPane);
 
+        // ===== BUTTON =====
         JButton checkBtn = new JButton("Check Message");
-        checkBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         checkBtn.setBackground(orange);
         checkBtn.setForeground(Color.WHITE);
-        checkBtn.setFont(new Font("Segoe UI", Font.BOLD, 14));
         checkBtn.setFocusPainted(false);
-        checkBtn.setBorderPainted(false);  // removes border line
-        checkBtn.setBorder(null);          // removes default border
-        checkBtn.setFont(new Font("Segoe UI", Font.BOLD, 16)); // bigger & bold text
-        checkBtn.setMaximumSize(new Dimension(220, 50));       // increase size
-        checkBtn.setPreferredSize(new Dimension(220, 50));     // ensure size
+        checkBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        checkBtn.setPreferredSize(new Dimension(220, 45));
 
+        JPanel btnWrapper = new JPanel();
+        btnWrapper.setBackground(cardColor);
+        btnWrapper.add(checkBtn);
 
-        JLabel resultLabel = new JLabel("Result: ");
+        // ===== RESULT =====
+        JLabel resultLabel = new JLabel("Result:");
         resultLabel.setForeground(Color.WHITE);
-        resultLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        resultLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+
+        JPanel resultWrapper = new JPanel();
+        resultWrapper.setBackground(cardColor);
+        resultWrapper.add(resultLabel);
 
         // ================= LOGIC =================
         checkBtn.addActionListener(e -> {
@@ -97,41 +109,25 @@ public class DashboardPage extends JFrame {
             }
         });
 
-        // ================= LOGOUT =================
-        JButton logoutBtn = new JButton("Logout");
-        logoutBtn.setBackground(orange);
-        logoutBtn.setForeground(Color.WHITE);
-        logoutBtn.setFocusPainted(false);
-        logoutBtn.setPreferredSize(new Dimension(200, 40));
-        logoutBtn.setMaximumSize(new Dimension(200, 40));
-        logoutBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        logoutBtn.addActionListener(e -> {
-            new ModernLoginPage().setVisible(true);
-            dispose();
-        });
-
-        // ================= ADD COMPONENTS =================
+        // ================= ADD =================
         card.add(instruction);
-        card.add(Box.createVerticalStrut(10));
-        card.add(scrollPane);
         card.add(Box.createVerticalStrut(20));
-        card.add(checkBtn);
+        card.add(textWrapper); // centered box
+        card.add(Box.createVerticalStrut(25));
+        card.add(btnWrapper); // centered button
         card.add(Box.createVerticalStrut(20));
-        card.add(resultLabel);
+        card.add(resultWrapper); // centered result
 
+        // ================= FOOTER =================
+        JLabel footer = new JLabel("© 2026 InternShield | Stay Safe Online");
+        footer.setForeground(Color.GRAY);
+        footer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // ================= FINAL =================
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(card, BorderLayout.CENTER);
-        mainPanel.add(logoutBtn, BorderLayout.SOUTH);
+        mainPanel.add(footer, BorderLayout.SOUTH);
 
         add(mainPanel);
     }
-
-    public static void main(String[] args) {
-    SwingUtilities.invokeLater(() -> {
-        new DashboardPage("Test User").setVisible(true);
-    });
 }
-}
-
-
